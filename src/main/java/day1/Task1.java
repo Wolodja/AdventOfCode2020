@@ -1,21 +1,17 @@
 package day1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Task1 {
 
+    FileReader fileReader = new FileReader();
+
     public void findNumber() {
-        List<Integer> numbers = readTheListOfNumbers();
+        List<Integer> numbers = fileReader.readTheListOfNumbers("1.txt");
         AtomicInteger multiplication = findTwoNumbersMultiplicationThatSumIs2020(numbers);
         System.out.println("The result is : " + multiplication);
     }
-
 
     public AtomicInteger findTwoNumbersMultiplicationThatSumIs2020(List<Integer> numbers) {
         AtomicInteger result = new AtomicInteger(-1);
@@ -26,25 +22,6 @@ public class Task1 {
             }
         });
         return result;
-    }
-
-    private List<Integer> readTheListOfNumbers() {
-        List<Integer> numbers = new ArrayList<>();
-        try {
-            URL url = getClass().getResource("/1.txt");
-            File myObj = new File(url.getPath());
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                numbers.add(Integer.valueOf(data));
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        } finally {
-            return numbers;
-        }
     }
 
     public static void main(String[] args) {
