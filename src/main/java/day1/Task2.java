@@ -8,7 +8,7 @@ public class Task2 {
     FileReader fileReader = new FileReader();
 
     public void findNumber() {
-        List<Integer> numbers = fileReader.readTheListOfNumbers("1.txt");
+        List<Integer> numbers = fileReader.readTheListOfNumbers("day1.txt");
         AtomicInteger multiplication = findThreeNumbersMultiplicationThatSumIs2020(numbers);
         System.out.println("The result is : " + multiplication);
     }
