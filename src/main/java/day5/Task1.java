@@ -3,12 +3,12 @@ package day5;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class Task1 {
 
     public void findHighestSeadId() {
-        TicketReader ticketReader = new TicketReader();
-        List<String> tickets = ticketReader.readTickets("day5.txt");
+        List<String> tickets = getTickets();
         AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
         tickets.forEach(ticket -> {
             Integer seatId = getSeatId(ticket);
@@ -17,6 +17,17 @@ public class Task1 {
             }
         });
         System.out.println("Max seadId is :" + max);
+    }
+
+    //This method is for Task 2
+    public List<Integer> getAllSetsIds(){
+        return getTickets().stream().map(this::getSeatId).collect(Collectors.toList());
+    }
+
+    private List<String> getTickets() {
+        TicketReader ticketReader = new TicketReader();
+        List<String> tickets = ticketReader.readTickets("day5.txt");
+        return tickets;
     }
 
     private Integer getSeatId(String ticket) {
