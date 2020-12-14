@@ -3,8 +3,6 @@ package day12;
 import common.InputReader;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class Task2 {
 
@@ -29,12 +27,12 @@ public class Task2 {
     }
 
     private int countTotal(List<Command> directions) {
-        Map<Direction, Integer> wavePoints = new HashMap<>();
+        Map<Direction, Integer> wavePoints = new EnumMap<>(Direction.class);
         wavePoints.put(Direction.N, 1);
         wavePoints.put(Direction.E, 10);
         wavePoints.put(Direction.S, 0);
         wavePoints.put(Direction.W, 0);
-        Map<Direction, Integer> position = new HashMap<>();
+        Map<Direction, Integer> position = new EnumMap<>(Direction.class);
         position.put(Direction.N, 0);
         position.put(Direction.E, 0);
         position.put(Direction.S, 0);
