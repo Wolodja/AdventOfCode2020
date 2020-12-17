@@ -10,4 +10,6 @@ public class TicketInput {
 
     String myTicket;
 
+    List<BigRange> bigRanges;
+
 }
