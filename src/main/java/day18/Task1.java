@@ -2,22 +2,42 @@ package day18;
 
 import common.InputReader;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Task1 {
 
-    public void t1(){
+    public void t1() {
         InputReader inputReader = new InputReader();
-        String expresionInput = inputReader.readInputAsOneString("day18.txt");
-        Long result = calculateResult(expresionInput);
-        System.out.println(result);
+        List<String> expressions = inputReader.readInputLines("day18.txt");
+        AtomicReference<Long> sum = new AtomicReference<>(0L);
+        expressions.forEach(e -> sum.updateAndGet(v -> v + Long.parseLong(calculateResult(e))));
+        System.out.println(sum);
     }
 
-    private Long calculateResult(String expresionInput) {
-        String expressionWithoutParentheses  = removePrentheses(expresionInput);
-        return 1L;
+    private String calculateResult(String expresionInput) {
+        while (expresionInput.contains(")")) {
+            int closedParentheses = expresionInput.indexOf(")");
+            int openParentheses = closedParentheses - new StringBuilder(expresionInput.substring(0, closedParentheses)).reverse().toString().indexOf("(") - 1;
+            expresionInput = expresionInput.substring(0, openParentheses) +
+                calculateSimple(expresionInput.substring(openParentheses + 1, closedParentheses)) +
+                expresionInput.substring(closedParentheses + 1);
+        }
+        return calculateSimple(expresionInput);
     }
 
-    private String removePrentheses(String expresionInput) {
-        return "";
+    private String calculateSimple(String expresionInput) {
+        String[] expression = expresionInput.split(" ");
+        Long current = Long.valueOf(expression[0]);
+        for (int i = 1; i < expression.length; i += 2) {
+            String currentChar = expression[i];
+            if (currentChar.equals("+")) {
+                current += Long.valueOf(expression[i + 1]);
+            } else if (currentChar.equals("*")) {
+                current *= Long.valueOf(expression[i + 1]);
+            }
+        }
+        return current.toString();
     }
 
 
